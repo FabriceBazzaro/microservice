@@ -100,6 +100,28 @@ impl Gollum {
 }
 ```
 
+# Important
+
+You can express a dependency from a `trait` and not only from a `struct`.
+If only one object implements this trait, it will be injected.
+
+```rust
+#[injectable(HorribleComponent)]
+struct Gollum {
+    //...
+}
+
+#[injector]
+impl Gollum {
+    #[inject]
+    fn new(precious: Arc<Mutex<dyn MyPreciousComponent>>) -> Result<Self> where Self: Sized + 'static {
+       let my_precious = precious.lock().unwrap();
+    }
+}
+```
+
+# Microservice
+
 Once you have defined all your components, you can create your microservice:
 
 ```rust
