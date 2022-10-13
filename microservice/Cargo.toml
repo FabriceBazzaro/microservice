@@ -1,0 +1,46 @@
+[package]
+name = "microservice"
+version = "0.1.0"
+edition = "2021"
+authors = ["Fabrice Bazzaro <contact@infine-it.fr>"]
+repository = ""
+license = "MIT/Apache-2.0"
+readme = "README.md"
+description = "Dependency injection infrastructure to generate microservices from an ecosystem of components."
+rust-version = "1.61"
+
+
+[dependencies]
+async-std = { version = "1.12" }
+async-trait = { version = "0.1" }
+futures = { version = "0.3" }
+lazy_static = { version = "1.4" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
+reqwest = { version = "0.11", features = ["json"] }
+
+# Error
+anyhow = { version = "1.0" }
+thiserror = { version = "1.0" }
+
+# Config
+gethostname = { version = "0.2" }
+regex = { version = "1.5" }
+serde_yaml = { version = "0.8" }
+
+# Logger
+chrono = { version = "0.4" }
+log = { version = "0.4", features = ["std", "serde"] }
+simple_logger = { version = "2.1", features = ["colored"] }
+
+# PubSub
+async-nats = { version = "0.20" }
+bincode = { version = "2.0.0-rc.1", git = "https://github.com/bincode-org/bincode.git" }
+bytes = { version = "1.1" }
+
+# Service Discovery
+consulrs = { version = "0.1.0" }
+
+# Internal dependencies
+injection_macros = { path = "../injection-macros" }
+tools_macros = { path = "../tools-macros" }

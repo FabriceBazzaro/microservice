@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "injection-macros",
+    "tools-macros",
+    "microservice",
+    "tests"
+]

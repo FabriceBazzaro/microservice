@@ -1,0 +1,15 @@
+[package]
+name = "tools_macros"
+version = "0.1.0"
+edition = "2021"
+authors = ["Fabrice Bazzaro <contact@infine-it.fr>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+description = "Macros tools: the hash! macro to declare constants as long as constants of type &str cannot be used in custom literals"
+rust-version = "1.61"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = { version = "1.0" }

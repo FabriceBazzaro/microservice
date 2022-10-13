@@ -1,0 +1,17 @@
+[package]
+name = "injection_macros"
+version = "0.1.0"
+edition = "2021"
+authors = ["Fabrice Bazzaro <contact@infine-it.fr>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+description = "Attribute macros to manage dependency injection: #[inject], #[injector] and #[injectable]"
+rust-version = "1.61"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "1.0", features = ["full"] }
+quote = { version = "1.0" }
+proc-macro2 = { version = "1.0" }
