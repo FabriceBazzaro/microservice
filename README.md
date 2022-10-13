@@ -1,6 +1,4 @@
-# Microservice &emsp; [![Microservice: rustc 1.61+]][Rust 1.61]
-
-[Rust 1.61]: https://blog.rust-lang.org/2022/05/19/Rust-1.61.0.html
+# Microservice
 
 **Microservice is a framework under development for composing microservices from
 instantiated components via dependency injection.**
@@ -102,7 +100,7 @@ impl Gollum {
 }
 ```
 
-Once you have defined all your components, you can create yor microservice:
+Once you have defined all your components, you can create your microservice:
 
 ```rust
 use log::{trace, info, debug, warn, error};
@@ -127,8 +125,7 @@ async fn main() {
 
 # Notes
 
-In all the Microservice functions, the Result encapsulate an [Anyhow Error]
-[Anyhow Error]: https://github.com/dtolnay/anyhow
+In all the Microservice functions, the Result encapsulate an [Anyhow Error](https://github.com/dtolnay/anyhow)
 
 As long as constants of type &str cannot be used in custom literals in stable
 rust the `hash!` macro will be used to declare constants.
