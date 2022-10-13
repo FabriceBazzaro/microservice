@@ -159,11 +159,14 @@ See the the [tests](tests) directory for tests. Run tests with `cargo test`.
 
 ## Contributing
 
-Check out the [issues][2] for items needing attention or submit your own and
+Check out the [issues][1] for items needing attention or submit your own and
 then:
 
-1. Fork the repo (https://github.com/FabriceBazzaro/microservice/fork)
+1. [Fork][2] the repo
 2. Create your feature branch (git checkout -b feature/fooBar)
 3. Commit your changes (git commit -am 'Add some fooBar')
 4. Push to the branch (git push origin feature/fooBar)
 5. Create a new Pull Request
+
+[1]: https://github.com/FabriceBazzaro/microservice/issues
+[2]: https://github.com/FabriceBazzaro/microservice/fork
