@@ -19,10 +19,17 @@ pub fn impl_injectable(attributes: &Vec<syn::Ident>, ast: &mut syn::Item) -> Tok
             let name_crate = crate_or_name("microservice".to_string());
             // Recursive register function (a call is done for each constrained trait in the attribute list)
             trait_data.items.push(syn::TraitItem::Verbatim(quote! {
+
+                // Register the structure whith the current trait in the registry
                 fn register_trait<T>(component_ref: std::sync::Arc<std::sync::Mutex<T>>, registry: &mut #name_crate::injection::Registry) where T: #trait_name +  #(#attributes +)* 'static, Self: Sized {
                     #(<Self as #attributes>::register_trait(component_ref.clone(), registry);)*
                     log::trace!("Register trait {}", std::stringify!(#trait_name));
                     registry.register_with_type::<dyn #trait_name>(component_ref);
+                }
+
+                // Return if the structure implement a trait
+                fn is_trait(id: std::any::TypeId) -> bool where Self: Sized + 'static {
+                    std::any::TypeId::of::<dyn #trait_name>() == id #(|| <Self as #attributes>::is_trait(id))*
                 }
             }));
 	    let output = quote! {
@@ -54,10 +61,16 @@ pub fn impl_injectable(attributes: &Vec<syn::Ident>, ast: &mut syn::Item) -> Tok
 	    let output = quote! {
 		#ast
                 impl #generics #name_crate::injection::Component for #struct_name<#(#sgenerics),*> #where_clause {
+                    // Function to register the structure and all its traits in the registry
                     fn register(component_ref: std::sync::Arc<std::sync::Mutex<Self>>, registry: &mut #name_crate::injection::Registry) where Self: Sized + 'static {
                         registry.register_with_type::<#struct_name<#(#sgenerics),*>>(component_ref.clone());
                         #(<Self as #attributes>::register_trait(component_ref.clone(), registry);)*
                         log::trace!("Register struct {}", std::stringify!(#struct_name));
+                    }
+
+                    // Function to return if a trait is implemented in the structure
+                    fn struct_impl_trait<_TRAIT_>() -> bool where _TRAIT_: ?Sized + 'static, Self: Sized + 'static {
+                        false #(|| <Self as #attributes>::is_trait(std::any::TypeId::of::<_TRAIT_>()))*
                     }
                 }
 	    };

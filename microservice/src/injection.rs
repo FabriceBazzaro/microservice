@@ -28,9 +28,13 @@ pub enum RegistryError<'a> {
 #[injectable]
 pub trait Component {
     fn register(component_ref: Arc<Mutex<Self>>, registry: &mut Registry) where Self: Sized + 'static;
+    fn struct_impl_trait<T>() -> bool where T: ?Sized + 'static, Self: Sized + 'static;
+    fn is_impl_trait<T>(&self) -> bool where T: ?Sized + 'static, Self: Sized + 'static {
+         Self::struct_impl_trait::<T>()
+    }
 }
 
-/// Injection is the implementation of the constructor of the class which is automatically called if dependency injection is used
+/// Injection is the implementation of the constructor of the class which is automatically called when dependency injection is used
 pub trait Injection {
     fn new_from_reg(_registry: &mut Registry) -> Result<Self> where Self: Sized {
         Err!(RegistryError::NotImplemented)

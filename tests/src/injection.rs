@@ -3,6 +3,8 @@ mod injection_tests {
     use std::sync::{Arc, Mutex};
     use microservice::error::*;
     use microservice::constant::Constant;
+    use microservice::service::Service;
+    use microservice::service_discovery::ServiceDiscovery;
     use microservice::injection::*;
     use microservice::*;
 
@@ -72,6 +74,34 @@ mod injection_tests {
         fn get_value(&self) -> u16 {
             self.value
         }
+    }
+
+    #[injectable(Service)]
+    trait TestTraitService: Service {}
+
+    #[injectable(TestTraitService)]
+    struct TestService {}
+
+    impl TestTraitService for TestService {}
+    impl Service for TestService {}
+
+
+
+    #[test]
+    fn component_struct_trait() {
+        assert_eq!(TestService::struct_impl_trait::<dyn TestTraitService>(), true);
+        assert_eq!(TestService::struct_impl_trait::<dyn Service>(), true);
+        assert_eq!(TestService::struct_impl_trait::<dyn ServiceDiscovery>(), false);
+        assert_eq!(TestService::struct_impl_trait::<dyn Component>(), true);
+    }
+
+    #[test]
+    fn component_instance_trait() {
+        let t = TestService {};
+        assert_eq!(t.is_impl_trait::<dyn TestTraitService>(), true);
+        assert_eq!(t.is_impl_trait::<dyn Service>(), true);
+        assert_eq!(t.is_impl_trait::<dyn ServiceDiscovery>(), false);
+        assert_eq!(t.is_impl_trait::<dyn Component>(), true);
     }
 
     #[test]

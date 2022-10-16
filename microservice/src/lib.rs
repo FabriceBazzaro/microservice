@@ -12,12 +12,6 @@ pub mod logger;
 pub mod pubsub;
 pub mod service_discovery;
 
-
-
-
-
-
-
 pub struct Microservice {
     pub registry: injection::Registry
 }

@@ -1,5 +1,7 @@
 use serde::Deserialize;
-use log::{LevelFilter, Log};
+
+pub use log::{LevelFilter, Log};
+pub use log::{trace, info, debug, warn, error};
 
 use crate::service::Service;
 use crate::injectable;

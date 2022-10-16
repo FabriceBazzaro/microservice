@@ -1,4 +1,4 @@
-# Microservice
+# Microservice - WIP
 
 **Microservice is a framework under development for composing microservices from
 instantiated components via dependency injection.**
@@ -125,19 +125,23 @@ impl Gollum {
 Once you have defined all your components, you can create your microservice:
 
 ```rust
-use log::{trace, info, debug, warn, error};
-
 use microservice::share::SimpleUrl;
 use microservice::constant::Constant;
+use microservice::config::{get_from_config, get_or_from_config};
+use microservice::service_discovery::ServiceDiscovery;
 use microservice::*;
 
-// Skip component definitions or use micro_ecosystem components
+use micro_ecosystem::config::YamlEnvConfig;
+use micro_ecosystem::logger::{PubSubLogger, ConsoleLogger};
+use micro_ecosystem::pubsub::NatsPubSub;
+use micro_ecosystem::service_discovery::ConsulServiceDiscovery;
+
 
 #[tokio::main]
 async fn main() {
     let mut m: Microservice = Microservice::new();
-    m.register_instance(Constant::<String, {hash!("CONFIG_FILE")}>::new("./config.yaml".into()));
-    m.register::<EnvStructFileConfig>().unwrap();
+    m.register_instance(Constant::<String, {hash!("CONFIG_FILE")}>::new("../config.yaml".into()));
+    m.register::<YamlEnvConfig>().unwrap();
     m.register::<NatsPubSub>().unwrap();
     m.register::<PubSubLogger>().unwrap();
     let cserv = m.register::<ConsulServiceDiscovery>().unwrap();

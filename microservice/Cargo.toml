@@ -3,7 +3,7 @@ name = "microservice"
 version = "0.1.0"
 edition = "2021"
 authors = ["Fabrice Bazzaro <contact@infine-it.fr>"]
-repository = ""
+repository = "https://github.com/FabriceBazzaro/microservice.git"
 license = "MIT/Apache-2.0"
 readme = "README.md"
 description = "Dependency injection infrastructure to generate microservices from an ecosystem of components."
@@ -11,15 +11,15 @@ rust-version = "1.61"
 
 
 [dependencies]
-async-std = { version = "1.12" }
-async-trait = { version = "0.1" }
-futures = { version = "0.3" }
-serde = { version = "1.0", features = ["derive"] }
-
 # Internal dependencies
 injection_macros = { path = "../injection-macros" }
 tools_macros = { path = "../tools-macros" }
 
+# Transverse dependencies
+async-std = { version = "1.12" }
+async-trait = { version = "0.1" }
+futures = { version = "0.3" }
+serde = { version = "1.0", features = ["derive"] }
 
 # Error
 anyhow = { version = "1.0" }

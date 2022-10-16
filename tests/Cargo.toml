@@ -8,4 +8,3 @@ edition = "2021"
 [dependencies]
 log = { version = "0.4", features = ["std", "serde"] }
 microservice = { path = "../microservice" }
-injection_macros = { path = "../injection-macros" }
