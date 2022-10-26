@@ -4,10 +4,10 @@ use std::fmt::Display;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SimpleUrl {
     #[serde(skip_serializing_if = "Option::is_none")]
-    protocol: Option<String>,
-    host: String,
+    pub protocol: Option<String>,
+    pub host: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<u16>
+    pub port: Option<u16>
 }
 
 impl SimpleUrl {

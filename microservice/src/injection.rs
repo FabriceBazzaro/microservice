@@ -78,8 +78,6 @@ impl Registry {
 
     pub fn register_with_type<T>(&mut self, component: Arc<Mutex<T>>) where T: ?Sized + 'static {
         let id = TypeId::of::<T>();
-        log::trace!("Registering whith id {:?}", id);
-
         if let Some(component_vec) = self.registries.get_mut(&id) {
             if let Some(registry_vec) = component_vec.as_any_mut().downcast_mut::<Mutex<Vec<Arc<Mutex<T>>>>>() {
                 registry_vec.lock().unwrap().push(component);
@@ -104,9 +102,6 @@ impl Registry {
 
     pub fn get<T>(&mut self) -> Result<Arc<Mutex<T>>> where T: ?Sized + 'static {
         let id = TypeId::of::<T>();
-
-        log::trace!("Find id {:?}", id);
-
         if let Some(registry_entry) = self.registries.get_mut(&id) {
             if let Some(registry_vec) = registry_entry.as_any_mut().downcast_mut::<Mutex<Vec<Arc<Mutex<T>>>>>() {
                 let len = registry_vec.lock().unwrap().len();

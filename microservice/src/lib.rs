@@ -2,6 +2,7 @@ use std::sync::{Arc, Mutex};
 
 pub use injection_macros::*;
 pub use tools_macros::*;
+
 pub mod share;
 pub mod error;
 pub mod injection;
@@ -28,7 +29,12 @@ impl Microservice {
     }
 
     pub fn register<T>(&mut self) -> error::Result<Arc<Mutex<T>>> where T: injection::Component + injection::Injection + 'static {
-        self.registry.register::<T>()
+        let result = self.registry.register::<T>()?;
+        if T::struct_impl_trait::<dyn logger::Logger>() {
+            let int_logger = self.get::<dyn logger::Logger>().unwrap();
+            logger::register_logger(int_logger.clone());
+        }
+        Ok(result)
     }
 
     pub fn get<T>(&mut self) -> error::Result<Arc<Mutex<T>>> where T: ?Sized + 'static {
@@ -38,6 +44,6 @@ impl Microservice {
 
 impl Drop for Microservice {
     fn drop(&mut self) {
-        println!("Drop microservice");
+        trace!("Drop microservice");
     }
 }

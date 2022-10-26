@@ -23,7 +23,7 @@ pub fn impl_injectable(attributes: &Vec<syn::Ident>, ast: &mut syn::Item) -> Tok
                 // Register the structure whith the current trait in the registry
                 fn register_trait<T>(component_ref: std::sync::Arc<std::sync::Mutex<T>>, registry: &mut #name_crate::injection::Registry) where T: #trait_name +  #(#attributes +)* 'static, Self: Sized {
                     #(<Self as #attributes>::register_trait(component_ref.clone(), registry);)*
-                    log::trace!("Register trait {}", std::stringify!(#trait_name));
+                    // #name_crate::trace!("Register trait {}", std::stringify!(#trait_name));
                     registry.register_with_type::<dyn #trait_name>(component_ref);
                 }
 
@@ -65,7 +65,7 @@ pub fn impl_injectable(attributes: &Vec<syn::Ident>, ast: &mut syn::Item) -> Tok
                     fn register(component_ref: std::sync::Arc<std::sync::Mutex<Self>>, registry: &mut #name_crate::injection::Registry) where Self: Sized + 'static {
                         registry.register_with_type::<#struct_name<#(#sgenerics),*>>(component_ref.clone());
                         #(<Self as #attributes>::register_trait(component_ref.clone(), registry);)*
-                        log::trace!("Register struct {}", std::stringify!(#struct_name));
+                        // #name_crate::trace!("Register struct {}", std::stringify!(#struct_name));
                     }
 
                     // Function to return if a trait is implemented in the structure

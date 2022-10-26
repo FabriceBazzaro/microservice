@@ -29,7 +29,10 @@ thiserror = { version = "1.0" }
 serde_yaml = { version = "0.8" }
 
 # Logger
-log = { version = "0.4", features = ["std", "serde"] }
+lazy_static = { version = "1.4" }
+chrono = { version = "0.4" }
+bincode = { version = "2.0.0-rc.1", git = "https://github.com/bincode-org/bincode.git" }
+
 
 # PubSub
 bytes = { version = "1.1" }
